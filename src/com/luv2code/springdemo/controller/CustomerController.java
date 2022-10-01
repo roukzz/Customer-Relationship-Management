@@ -8,27 +8,25 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.luv2code.springdemo.dao.CustomerDAO;
 import com.luv2code.springdemo.entity.Customer;
+import com.luv2code.springdemo.service.CustomerService;
 
 @Controller
 @RequestMapping("/customer")
 public class CustomerController {
 	
-	// need to inject the customer dao
-	// here we just have the CustomerDAO which is an interface but why not the Implementation?
-	// the answer for that is that we added the @Repository in the CusotmerDAOImpl so that spring will 
-	// scan and look for the CustomerDAO implementation and autowire the implementation in here
+	// need to inject the customer service
+	
 	@Autowired
-	private CustomerDAO customerDAO;
+	private CustomerService customerService;
 	
 	
-	@GetMapping("/list ")
+	@GetMapping("/list")
 	public String listCustomer(Model theModel) {
 		
-		// get customers from the dao
+		// get customers from the service
 		
-		List<Customer> theCustomers = customerDAO.getCustomers();
+		List<Customer> theCustomers = customerService.getCustomers();
 		// add the customers to the model
 		theModel.addAttribute("customers", theCustomers);
 		
